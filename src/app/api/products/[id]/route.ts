@@ -2,8 +2,8 @@ import { db } from '@/lib/db/db';
 import { products } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-    const id = params.id;
+export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
 
     try {
         const product = await db
@@ -18,6 +18,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
         return Response.json(product[0]);
     } catch (err) {
-        return Response.json({ message: 'Failed to fetch a product', error: err }, { status: 500 });
+        return Response.json(
+            {
+                message: 'Failed to fetch a product',
+                error: err instanceof Error ? err.message : 'Unknown error',
+            },
+            { status: 500 }
+        );
     }
 }

@@ -1,0 +1,1 @@
+CREATE INDEX "pincode_idx" ON "warehouses" ("pincode");

@@ -46,6 +46,12 @@ export async function GET() {
         const allProducts = await db.select().from(products).orderBy(desc(products.id));
         return Response.json(allProducts);
     } catch (err) {
-        return Response.json({ message: 'Failed to fetch products', error: err }, { status: 500 });
+        return Response.json(
+            {
+                message: 'Failed to fetch products',
+                error: err instanceof Error ? err.message : String(err),
+            },
+            { status: 500 },
+        );
     }
 }
