@@ -1,8 +1,11 @@
+import { Button } from "@/components/ui/button";
 
 const AdminPage = () => {
   return (
     <div>
-      <h1>Admin Page!</h1>
+      <div className="flex min-h-svh items-center justify-center">
+        <Button>Click me</Button>
+      </div>
     </div>
   )
 }
